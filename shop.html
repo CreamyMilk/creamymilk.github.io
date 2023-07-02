@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,56 +8,107 @@
 </head>
 
 <body>
+    <br />
+    <label> Add New Item</label>
+    <input type="file" id="file-input" accept="image/*" capture="environment" tabIndex="1" />
+    <br />
 
-    <video id="player" controls autoplay></video>
-<button id="capture">Capture</button>
-<canvas id="canvas" width="320" height="240"></canvas>
-<script>
-  const player = document.getElementById('player');
-  const canvas = document.getElementById('canvas');
-  const context = canvas.getContext('2d');
-  const captureButton = document.getElementById('capture');
+    <h3 id="dynamic_title">Items</h3>
+    <div id="shopview"></div>
 
-  const constraints = {
-    video: true,
-  };
-
-  captureButton.addEventListener('click', () => {
-    // Draw the video frame to the canvas.
-    context.drawImage(player, 0, 0, canvas.width, canvas.height);
-  });
-
-  // Attach the video stream to the video element and autoplay.
-  navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
-    player.srcObject = stream;
-  });
-</script>
-
-    <p>
-        <label for="file-input">Add Product</label>
-        <input type="file" id="file-input" capture="user" accept="image/*" />
-    </p>
-
-    <ul id="products">
-
-    </ul>
-    
 </body>
 <script>
-    const fileInput = document.getElementById('file-input');
-  
-    fileInput.addEventListener('change', (e) =>
-      doSomethingWithFiles(e.target.files),
-    );
+    let shoppingList = {}
 
-    function doSomethingWithFiles(files){
-       let costPrice = prompt("How much is it ?")
-       let quantity = prompt("Quantity ?")
-       alert(costPrice)
+    const shopViewArea = document.getElementById("shopview")
+    const dynamicTitle = document.getElementById("dynamic_title")
+
+    function renderItems() {
+        let total = 0
+
+        shopViewArea.innerHTML = ""
+        dynamicTitle.innerHTML = ""
+
+        for (item of Object.values(shoppingList)) {
+            shopViewArea.innerHTML += `
+            <div onclick="removeItem('${item.Photo}')">
+                <img width="100px" height="100px" src="${item.Photo}"> ${item.Cost} </img>
+            </div>
+            `
+            total += item.Cost
+        }
+
+        let itemCount = Object.keys(shoppingList).length
+        dynamicTitle.innerHTML = `Items (${itemCount}) - Ksh. (${total})`
     }
 
+    function removeItem(itemId) {
+        if (!confirm("Delete 🚮 ?")) {
+            return
+        }
 
-  </script>
+        const newList = Object.keys(shoppingList).reduce((object, key) => {
+            if (key !== itemId) {
+                object[key] = shoppingList[key]
+            }
+            return object
+        }, {})
+
+        shoppingList = newList
+
+        renderItems()
+    }
+
+    function addItem(newItem) {
+        shoppingList[newItem.Photo] = newItem
+        renderItems()
+    }
+
+    const fileInput = document.getElementById('file-input');
+
+    const processImage = (event) => {
+        const imageFiles = event.target.files;
+        const imageFilesLength = imageFiles.length;
+        if (imageFilesLength > 0) {
+            const imageSrc = URL.createObjectURL(imageFiles[0]);
+            console.log(imageSrc)
+            // const imagePreviewElement = document.querySelector("#preview-selected-image");
+            // imagePreviewElement.src = imageSrc;
+            // imagePreviewElement.style.display = "block";
+
+            let name = ""
+            let quantity = ""
+            let cost = prompt("How much 💰 ?")
+
+            addItem({
+                Photo: imageSrc,
+                Name: name,
+                Cost: parseInt(cost),
+                Quantity: quantity,
+            })
+
+        }
+    };
+
+    fileInput.addEventListener('change', processImage)
+
+    document.addEventListener('keypress', function (e) {
+        var target = e.target;
+        if (e.which === 13 && (target.tagName === 'INPUT' || target.tagName == "TEXTAREA" || target.tagName === 'SELECT')) {
+            e.preventDefault();
+            var tabIndex = parseInt(target.getAttribute('tabIndex'));
+            var nextElement = document.querySelector('[tabIndex="' + (tabIndex + 1) + '"]');
+            console.log(nextElement);
+            if (!nextElement) {
+                nextElement = document.querySelector('[tabIndex="1"]');
+            }
+            nextElement.focus();
+            nextElement.click();
+        }
+    });
+
+</script>
+
 </html>
 <!---
     Take photo -> Add Amount -> A quantity -> Store in DB
