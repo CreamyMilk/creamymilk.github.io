@@ -79,7 +79,7 @@ async function FetchTransactionStatus(transationId) {
   return responseBody;
 }
 
-async function Pay(amountInCents, phoneNumber, callbackFunc) {
+async function PayWithTenn(amountInCents, phoneNumber, callbackFunc) {
   let paymentInfo = await sendDepositRequests(amountInCents, phoneNumber);
   let txId = paymentInfo.data.initateDeposit.Txid;
   let counter = 0;
