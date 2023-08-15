@@ -1,4 +1,4 @@
-const serverIp = "https://mpesa-bridge.onrender.com";
+const serverIp = "https://weprocesspayments.ink";
 const TENN_PAYMENTS_GQL_URL = `${serverIp}/query`;
 const API_KEY = "0xb0c0186943f5848670ca62980046966b3f11a1f1";
 
