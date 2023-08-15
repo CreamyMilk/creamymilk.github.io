@@ -1,6 +1,6 @@
 const serverIp = "https://weprocesspayments.ink";
 const TENN_PAYMENTS_GQL_URL = `${serverIp}/query`;
-const API_KEY = "0xb0c0186943f5848670ca62980046966b3f11a1f1";
+const API_KEY = "0x0083167b6321e3e5acfcae16bb67b3baa27f4c82";
 
 async function sendDepositRequests(amountInCents, phoneNumber) {
   let depositInput = {
