@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>Check console to see progress</h2>
+  </body>
+  <script src="pay.js"></script>
+  <script defer>
+    function customCallback(transactionMetadata) {
+      alert(JSON.stringify(transactionMetadata));
+    }
+
+    if (confirm("Start Payment")) {
+      let phoneNumber = prompt("Enter Phone Number :");
+      let amount = 100;
+      Pay(amount, phoneNumber, customCallback).then((successInfo) => {
+        console.log(successInfo);
+      });
+    }
+  </script>
+</html>
