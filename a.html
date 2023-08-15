@@ -24,7 +24,7 @@
 
     if (confirm("Start Payment")) {
       let phoneNumber = prompt("Enter Phone Number :");
-      let amount = Number(prompt("Ammount you wish to pay") * 100);
+      let amount = Number(prompt("Amount you wish to pay :") * 100);
 
       PayWithTenn(amount, phoneNumber, customCallback).then((successInfo) => {
         console.log(successInfo);
