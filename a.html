@@ -7,9 +7,9 @@
   </head>
   <body>
     <h2>Check console to see progress</h2>
-
     <div id="addStuffHere"></div>
   </body>
+
   <script src="pay.js"></script>
   <script defer>
     function customCallback(transactionMetadata) {
@@ -24,7 +24,7 @@
 
     if (confirm("Start Payment")) {
       let phoneNumber = prompt("Enter Phone Number :");
-      let amount = Number(prompt("Amount you wish to pay :") * 100);
+      let amount = Number(prompt("Amount you wish to pay :"));
 
       PayWithTenn(amount, phoneNumber, customCallback).then((successInfo) => {
         console.log(successInfo);

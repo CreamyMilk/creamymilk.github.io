@@ -79,8 +79,8 @@ async function FetchTransactionStatus(transationId) {
   return responseBody;
 }
 
-async function PayWithTenn(amountInCents, phoneNumber, callbackFunc) {
-  let paymentInfo = await sendDepositRequests(amountInCents, phoneNumber);
+async function PayWithTenn(amountInKes, phoneNumber, callbackFunc) {
+  let paymentInfo = await sendDepositRequests(amountInKes * 100, phoneNumber);
   let txId = paymentInfo.data.initateDeposit.Txid;
   let counter = 0;
 
