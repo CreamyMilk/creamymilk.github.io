@@ -17,6 +17,12 @@
     <div id="shopview"></div>
 
 </body>
+<style>
+    .productImage{
+        display: flex;
+    }
+
+</style>
 <script>
     let shoppingList = {}
 
@@ -31,8 +37,11 @@
 
         for (item of Object.values(shoppingList)) {
             shopViewArea.innerHTML += `
-            <div onclick="removeItem('${item.Photo}')">
-                <img width="100px" height="100px" src="${item.Photo}"> ${item.Cost} </img>
+            <div onclick="removeItem('${item.Photo}')" class="productImage">
+                <img width="150px" height="150px" src="${item.Photo}"/> 
+                <div>
+                <h3>${item.Cost}</h3>
+                </div>
             </div>
             `
             total += item.Cost
