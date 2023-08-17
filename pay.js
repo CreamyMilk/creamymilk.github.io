@@ -103,6 +103,8 @@ async function PayWithTenn(amountInKes, phoneNumber, callbackFunc) {
     3000,
     txId
   );
+
+  return paymentInfo
 }
 
 console.log("SDK Loaded ✅")
